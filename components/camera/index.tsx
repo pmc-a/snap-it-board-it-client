@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+
+import * as MediaLibrary from 'expo-media-library';
 import { Camera } from 'expo-camera';
 
 interface IProps {
@@ -30,10 +32,12 @@ const CustomCamera: React.FunctionComponent<IProps> = ({
 	const snapPhoto = async () => {
 		if (camera) {
 			let photo = await camera.current.takePictureAsync();
+
 			// TODO: Save to camera roll
+			MediaLibrary.saveToLibraryAsync(photo.uri);
+
 			// TODO: Insert HTTP request to send this to backend
 			// Example URI: file:///var/mobile/Containers/Data/Application/921AC448-CC83-4D9C-A94E-3E17B6588E92/Library/Caches/ExponentExperienceData/%2540anonymous%252Fsnap-it-board-it-client-f24edca6-61fd-49cb-b111-bde940eb6484/Camera/2AAD9EA9-31CA-480A-8F17-5807C8957BBF.jpg
-			console.log(photo);
 		}
 	}
 
