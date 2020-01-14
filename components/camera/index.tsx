@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 import * as MediaLibrary from 'expo-media-library';
 import { Camera } from 'expo-camera';
+import { uploadImage } from '../../services/upload.service';
 
 interface IProps {
 	setShowCamera: Function;
@@ -33,11 +34,12 @@ const CustomCamera: React.FunctionComponent<IProps> = ({
 		if (camera) {
 			let photo = await camera.current.takePictureAsync();
 
-			// TODO: Save to camera roll
+			// Save to camera roll
 			MediaLibrary.saveToLibraryAsync(photo.uri);
 
-			// TODO: Insert HTTP request to send this to backend
-			// Example URI: file:///var/mobile/Containers/Data/Application/921AC448-CC83-4D9C-A94E-3E17B6588E92/Library/Caches/ExponentExperienceData/%2540anonymous%252Fsnap-it-board-it-client-f24edca6-61fd-49cb-b111-bde940eb6484/Camera/2AAD9EA9-31CA-480A-8F17-5807C8957BBF.jpg
+			// TODO: Add user feedback to acknowledge image has been uploaded
+			// HTTP POST to upload image
+			uploadImage(photo.uri);
 		}
 	}
 
